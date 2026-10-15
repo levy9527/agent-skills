@@ -1,6 +1,6 @@
 # Performance Checklist
 
-Quick reference checklist for web application performance. Use alongside the `performance-optimization` skill.
+Quick reference checklist for web application performance.
 
 ## Core Web Vitals Targets
 
@@ -226,3 +226,6 @@ onINP(({ value, attribution }) => {
 | Large bundles | Slow Time to Interactive | Code split, tree shake, audit deps |
 | Blocking main thread | Poor INP, unresponsive UI | Chunk long tasks with `scheduler.yield()` / `yieldToMain`, offload to Web Workers |
 | Memory leaks | Growing memory, eventual crash | Clean up listeners, intervals, refs |
+
+## See also
+For more detail, see the `performance-optimization` skill.
