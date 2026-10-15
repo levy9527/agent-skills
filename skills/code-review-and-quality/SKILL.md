@@ -1,6 +1,6 @@
 ---
 name: code-review-and-quality
-description: Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when the diff is pasted inline.
+description: Conducts multi-axis code review. Use before merging any change. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when the diff is pasted inline.
 ---
 
 # Code Review and Quality
@@ -190,7 +190,7 @@ Label every comment with its severity so the author knows what's required vs opt
 
 This prevents authors from treating all feedback as mandatory and wasting time on optional suggestions.
 
-**Lead with what matters.** Order findings by leverage: correctness and security first, then structural regressions and missed simplifications, then everything else. Don't bury a real issue under cosmetic nits — a few high-conviction comments beat a long list. If you have one structural problem and ten nits, the structural problem *is* the review.
+**Lead with what matters.** Order findings: correctness and security first, then structural regressions and missed simplifications, then everything else. Don't bury a real issue under cosmetic nits — a few high-conviction comments beat a long list. If you have one structural problem and ten nits, the structural problem *is* the review.
 
 ### Step 5: Verify the Verification
 
@@ -202,32 +202,6 @@ Check the author's verification story:
 - Was the change tested manually?
 - Are there screenshots for UI changes?
 - Is there a before/after comparison?
-```
-
-## Multi-Model Review Pattern
-
-Use different models for different review perspectives:
-
-```
-Model A writes the code
-    │
-    ▼
-Model B reviews for correctness and architecture
-    │
-    ▼
-Model A addresses the feedback
-    │
-    ▼
-Human makes the final call
-```
-
-This catches issues that a single model might miss — different models have different blind spots.
-
-**Example prompt for a review agent:**
-```
-Review this code change for correctness, security, and adherence to
-our project conventions. The spec says [X]. The change should [Y].
-Flag any issues as Critical, Required, Optional, or Nit.
 ```
 
 ## Dead Code Hygiene
@@ -267,16 +241,6 @@ When resolving review disputes, apply this hierarchy:
 4. **Codebase consistency** is acceptable if it doesn't degrade overall health
 
 **Don't accept "I'll clean it up later."** Experience shows deferred cleanup rarely happens. Require cleanup before submission unless it's a genuine emergency. If surrounding issues can't be addressed in this change, require filing a bug with self-assignment.
-
-## Honesty in Review
-
-When reviewing code — whether written by you, another agent, or a human:
-
-- **Don't rubber-stamp.** "LGTM" without evidence of review helps no one.
-- **Don't soften real issues.** "This might be a minor concern" when it's a bug that will hit production is dishonest.
-- **Quantify problems when possible.** "This N+1 query will add ~50ms per item in the list" is better than "this could be slow."
-- **Push back on approaches with clear problems.** Sycophancy is a failure mode in reviews. If the implementation has issues, say so directly and propose alternatives.
-- **Accept override gracefully.** If the author has full context and disagrees, defer to their judgment. Comment on code, not people — reframe personal critiques to focus on the code itself.
 
 ## Dependency Discipline
 
@@ -349,31 +313,14 @@ For triaging `npm audit` findings and supply-chain risk (typosquatting, compromi
 - [ ] **Request changes** — Issues must be addressed
 ```
 ## See Also
-
+# todo
 - For detailed security review guidance, see `../../references/security-checklist.md`
 - For performance review checks, see `../../references/performance-checklist.md`
 
-## Common Rationalizations
-
-| Rationalization | Reality |
-|---|---|
-| "It works, that's good enough" | Working code that's unreadable, insecure, or architecturally wrong creates debt that compounds. |
-| "I wrote it, so I know it's correct" | Authors are blind to their own assumptions. Every change benefits from another set of eyes. |
-| "We'll clean it up later" | Later never comes. The review is the quality gate — use it. Require cleanup before merge, not after. |
-| "AI-generated code is probably fine" | AI code needs more scrutiny, not less. It's confident and plausible, even when wrong. |
-| "The tests pass, so it's good" | Tests are necessary but not sufficient. They don't catch architecture problems, security issues, or readability concerns. |
-| "The refactor makes it cleaner" | Relocating complexity isn't reducing it. If the reader still holds the same number of concepts, the structure didn't improve — look for the version where branches disappear. |
-| "It's only a small addition to this file" | Small diffs still push files past a healthy size and bolt branches onto unrelated flows. Judge the resulting structure, not the diff size. |
-| "It's just a version bump" | A bump is a behavior change you didn't write. Read the changelog; semver doesn't guarantee no breakage. |
-| "I'll upgrade everything in one PR to save time" | A bulk bump that breaks the build hides which package did it. One dependency per change keeps the cause and the revert clean. |
-
 ## Red Flags
 
-- PRs merged without any review
 - Review that only checks if tests pass (ignoring other axes)
-- "LGTM" without evidence of actual review
 - Security-sensitive changes without security-focused review
-- Large PRs that are "too big to review properly" (split them)
 - No regression tests with bug fix PRs
 - Review comments without severity labels — makes it unclear what's required vs optional
 - Accepting "I'll fix it later" — it never happens
