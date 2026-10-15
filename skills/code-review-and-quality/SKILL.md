@@ -313,9 +313,10 @@ For triaging `npm audit` findings and supply-chain risk (typosquatting, compromi
 - [ ] **Request changes** — Issues must be addressed
 ```
 ## See Also
-# todo
-- For detailed security review guidance, see `../../references/security-checklist.md`
-- For performance review checks, see `../../references/performance-checklist.md`
+- For detailed security review guidance, see `references/security-checklist.md`
+- For performance review checks, see `references/performance-checklist.md`
+- For security code patterns and decision aids, see `references/security-patterns.md`
+- For performance patterns and worked fixes, see `references/optimization-patterns.md`
 
 ## Red Flags
 
